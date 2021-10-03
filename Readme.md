@@ -4,14 +4,14 @@ This is a repo to work with and use NFTs smart contracts in a python environment
 
 If you'd like to see another repo using random NFTs that are deployed to mainnet, check out the [D&D package](https://github.com/PatrickAlphaC/dungeons-and-dragons-nft).
 
-## Prerequisites
+### Prerequisites
 
 Please install or have installed the following:
 
 - [nodejs and npm](https://nodejs.org/en/download/)
 - [python](https://www.python.org/downloads/)
 
-## Installation
+### Installation
 
 1. [Install Brownie](https://eth-brownie.readthedocs.io/en/stable/install.html), if you haven't already. Here is a simple way to install brownie.
 
@@ -103,7 +103,7 @@ brownie run scripts/advanced_collectible/create_metadata.py --network rinkeby
 brownie run scripts/advanced_collectible/set_tokenuri.py --network rinkeby
 ```
 
-## Verify on Etherscan
+### Verify on Etherscan
 
 > Looking for help fixing this!
 > Currently, the advanced collectibles contract has an issue with ERC721 and the Chainlink contracts, so they have be verified manually. However, the simple contract can be verified if you just set your `ETHERSCAN_TOKEN`.
@@ -154,7 +154,7 @@ brownie run scripts/advanced_collectible/set_tokenuri.py --network rinkeby
 
 And after some time, (you may have to wait up to 20 minutes for it to render on opensea), you should see your NFT on opensea! [It'll look something like this.](https://testnets.opensea.io/assets/0x8acb7ca932892eb83e4411b59309d44dddbc4cdf/0)
 
-## _NEW_ Pinata
+### _NEW_ Pinata
 
 If you want to auto-upload to pinata instead of IPFS automatically, you can do so by getting a [Pinata API Key.](https://pinata.cloud/documentation#GettingStarted)
 
@@ -171,13 +171,13 @@ Then run:
 python scripts/upload_to_pinata.py
 ```
 
-## Testing
+### Testing
 
 ```
 brownie test
 ```
 
-## Linting
+### Linting
 
 ```
 pip install black
@@ -186,9 +186,7 @@ autoflake --in-place --remove-unused-variables -r .
 black .
 ```
 
-## Resources
-
-To get started with Brownie:
+### To get started with Brownie:
 
 - [Chainlink Documentation](https://docs.chain.link/docs)
 - Check out the [Chainlink documentation](https://docs.chain.link/docs) to get started from any level of smart contract engineering.
@@ -200,7 +198,7 @@ Shoutout to [TheLinkMarines](https://twitter.com/TheLinkMarines) on twitter for 
 
 Any questions? Join our [Discord](https://discord.gg/2YHSAey)
 
-## License
+### License
 
 This project is licensed under the [MIT license](LICENSE).
 
