@@ -10,7 +10,7 @@ contract SimpleCollectible is ERC721 {
 
     function createCollectible() public returns (uint256) {
         uint256 newTokenId = tokenCounter;
-        _safeMint(msg.sender, newTokenId); // minting a new nft with the owner address and the token-id for the same
+        _safeMint(msg.sender, newTokenId); // minting a new nft with the owner address and the token-id
         tokenCounter += 1;
         return newTokenId;
     }
