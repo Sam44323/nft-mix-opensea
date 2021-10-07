@@ -13,3 +13,4 @@ def main():
     transaction.wait(1)
     print(
         f"Awesome, now you can view your nft at {OPENSEA_URL.format(simple_collectible.address, simple_collectible.tokenCounter() - 1)}")
+    return simple_collectible
