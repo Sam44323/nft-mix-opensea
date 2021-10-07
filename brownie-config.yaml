@@ -5,7 +5,7 @@ compiler:
     remappings:
       - "@openzeppelin=OpenZeppelin/openzeppelin-contracts@3.4.0"
 dotenv: .env
-network:
+networks:
   default: rinkeby
   development:
     verify: False
