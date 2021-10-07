@@ -1,5 +1,5 @@
-from brownie import config, network, SimpleCollectible
+from scripts.helpful_scripts import get_account
 
 
 def main():
-    print(network.show_active())
+    account = get_account()
