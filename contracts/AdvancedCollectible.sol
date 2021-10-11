@@ -16,7 +16,7 @@ contract AdvancedCollectible is ERC721, VRFConsumerBase {
     mapping(uint256 => Breed) public tokenIdToBreed;
     mapping(bytes32 => address) public requestIdToSender;
     event requestedCollectible(bytes32 indexed requestId, address requester);
-    event breedAssigned(bytes32 indexed tokenId, Breed breed);
+    event breedAssigned(uint256 indexed tokenId, Breed breed);
 
     constructor(
         address _VRFCoordinator,
@@ -29,7 +29,7 @@ contract AdvancedCollectible is ERC721, VRFConsumerBase {
         ERC721("Dogie", "DOG")
     {
         tokenCounter = 0;
-        keyhash = keyHash;
+        keyhash = _keyHash;
         fee = _fee;
     }
 
@@ -37,7 +37,7 @@ contract AdvancedCollectible is ERC721, VRFConsumerBase {
         public
         returns (bytes32)
     {
-        bytes32 requestId = requestRandomness(keyHash, fee);
+        bytes32 requestId = requestRandomness(keyhash, fee);
         requestIdToSender[requestId] = msg.sender;
         emit requestedCollectible(requestId, msg.sender);
     }
@@ -56,7 +56,6 @@ As fulfillRandomness is called by the vrf coordinator, so we can't use msg.sende
         emit breedAssigned(newTokenId, breed);
         _safeMint(requestIdToSender[requestId], newTokenId);
         tokenCounter += 1;
-        return newTokenId;
     }
 
     function setTokenURI(uint256 tokenId, string memory tokenURI) public {
