@@ -15,6 +15,8 @@ contract AdvancedCollectible is ERC721, VRFConsumerBase {
     }
     mapping(uint256 => Breed) public tokenIdToBreed;
     mapping(bytes32 => address) public requestIdToSender;
+    event requestedCollectible(bytes32 indexed requestId, address requester);
+    event breedAssigned(bytes32 indexed tokenId, Breed breed);
 
     constructor(
         address _VRFCoordinator,
@@ -37,6 +39,7 @@ contract AdvancedCollectible is ERC721, VRFConsumerBase {
     {
         bytes32 requestId = requestRandomness(keyHash, fee);
         requestIdToSender[requestId] = msg.sender;
+        emit requestedCollectible(requestId, msg.sender);
     }
 
     /**
@@ -49,7 +52,8 @@ As fulfillRandomness is called by the vrf coordinator, so we can't use msg.sende
     {
         Breed breed = Breed(randomNumber % 3);
         uint256 newTokenId = tokenCounter;
-        tokenIdToBreed[newTokenId] = breed; // mapping each nft token-id to it's particular breed
+        tokenIdToBreed[newTokenId] = breed;
+        emit breedAssigned(newTokenId, breed);
         _safeMint(requestIdToSender[requestId], newTokenId);
         tokenCounter += 1;
         return newTokenId;
