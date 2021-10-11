@@ -6,3 +6,4 @@ reports/
 ..gpg
 .vscode
 .env
+.pytest_cache
