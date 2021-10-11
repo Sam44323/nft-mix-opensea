@@ -13,7 +13,8 @@ contract AdvancedCollectible is ERC721, VRFConsumerBase {
         SHIBA_INU,
         ST_BERNARD
     }
-    mapping(uint256 => Breed) tokenIdToBreed;
+    mapping(uint256 => Breed) public tokenIdToBreed;
+    mapping(bytes32 => address) public requestIdToSender;
 
     constructor(
         address _VRFCoordinator,
@@ -35,7 +36,12 @@ contract AdvancedCollectible is ERC721, VRFConsumerBase {
         returns (bytes32)
     {
         bytes32 requestId = requestRandomness(keyHash, fee);
+        requestIdToSender[requestId] = msg.sender;
     }
+
+    /**
+As fulfillRandomness is called by the vrf coordinator, so we can't use msg.sender to get the address of the creator. So we are using a request-id mapping to owner address and refer it when we are going to mint the nft.
+ */
 
     function fulfillRandomness(bytes32 requestId, uint256 randomNumber)
         internal
@@ -44,5 +50,16 @@ contract AdvancedCollectible is ERC721, VRFConsumerBase {
         Breed breed = Breed(randomNumber % 3);
         uint256 newTokenId = tokenCounter;
         tokenIdToBreed[newTokenId] = breed; // mapping each nft token-id to it's particular breed
+        _safeMint(requestIdToSender[requestId], newTokenId);
+        tokenCounter += 1;
+        return newTokenId;
+    }
+
+    function setTokenURI(uint256 tokenId, string memory tokenURI) public {
+        require(
+            _isApprovedOrOwner(msg.sender, tokenId),
+            "ERC721: caller is not owner nor approved"
+        );
+        _setTokenURI(tokenId, tokenURI);
     }
 }
