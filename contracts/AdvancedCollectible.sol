@@ -8,6 +8,12 @@ contract AdvancedCollectible is ERC721, VRFConsumerBase {
     uint256 public tokenCounter;
     bytes32 public keyhash;
     uint256 public fee;
+    enum Breed {
+        PUG,
+        SHIBA_INU,
+        ST_BERNARD
+    }
+    mapping(uint256 => Breed) tokenIdToBreed;
 
     constructor(
         address _VRFCoordinator,
@@ -26,12 +32,17 @@ contract AdvancedCollectible is ERC721, VRFConsumerBase {
 
     function createCollectible(string memory tokenURI)
         public
-        returns (uint256)
+        returns (bytes32)
     {
+        bytes32 requestId = requestRandomness(keyHash, fee);
+    }
+
+    function fulfillRandomness(bytes32 requestId, uint256 randomNumber)
+        internal
+        override
+    {
+        Breed breed = Breed(randomNumber % 3);
         uint256 newTokenId = tokenCounter;
-        _safeMint(msg.sender, newTokenId);
-        _setTokenURI(newTokenId, tokenURI);
-        tokenCounter += 1;
-        return newTokenId;
+        tokenIdToBreed[newTokenId] = breed; // mapping each nft token-id to it's particular breed
     }
 }
