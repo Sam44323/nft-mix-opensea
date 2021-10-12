@@ -43,7 +43,7 @@ contract AdvancedCollectible is ERC721, VRFConsumerBase {
     }
 
     /**
-As fulfillRandomness is called by the vrf coordinator, so we can't use msg.sender to get the address of the creator. So we are using a request-id mapping to owner address and refer it when we are going to mint the nft.
+As fulfillRandomness is called by the vrf coordinator when we call the requestRandomness method, so we can't use msg.sender to get the address of the creator. So we are using a request-id mapping to owner address and refer it when we are going to mint the nft.
  */
 
     function fulfillRandomness(bytes32 requestId, uint256 randomNumber)
