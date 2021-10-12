@@ -1,9 +1,10 @@
 from brownie import AdvancedCollectible
-from scripts.utils.helpful_scripts import get_account
+from scripts.utils.helpful_scripts import get_account, OPENSEA_URL
 
 
 def deploy_and_create():
-    print('hello')
+    account = get_account()
+    advanced_collectible = AdvancedCollectible.deploy({"from": account})
 
 
 def main():
