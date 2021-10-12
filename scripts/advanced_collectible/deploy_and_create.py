@@ -1,5 +1,5 @@
 from brownie import AdvancedCollectible, config, network
-from scripts.utils.helpful_scripts import get_account, OPENSEA_URL, get_contract
+from scripts.utils.helpful_scripts import get_account, OPENSEA_URL, get_contract, fund_with_link
 
 
 def deploy_and_create():
@@ -10,6 +10,10 @@ def deploy_and_create():
         config["networks"][network.show_active()]["keyhash"],
         config["networks"][network.show_active()]["fee"],
         {"from": account})
+    fund_with_link(advanced_collectible.address)
+    creating_tx = advanced_collectible.createCollectible({"from": account})
+    creating_tx.wait(1)
+    print("New token has been created!")
 
 
 def main():
