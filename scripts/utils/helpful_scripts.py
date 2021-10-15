@@ -5,7 +5,7 @@ LOCAL_BLOCKCHAIN_ENVIRONMENTS = ["hardhat",
                                  "development", "ganache", "mainnet-fork"]
 OPENSEA_URL = "https://testnets.opensea.io/assets/{}/{}"
 
-BREED_MAPPING = {0: "PUG", 2: "SHIBA_INU", 3: "ST_BERNARD"}
+BREED_MAPPING = ["PUG", "SHIBA_INU", "ST_BERNARD"]
 
 
 def get_breed(breed_number):
