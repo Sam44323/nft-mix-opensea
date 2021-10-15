@@ -20,22 +20,20 @@ def main():
             collectible_metadata["name"] = breed
             collectible_metadata["description"] = f"An adorable {breed} puppy!"
             # getting the image path for that a particular breed
-            image_path = '../../img/' + breed.lower().replace('_', '-') + '.png'
-            image_url = upload_image(image_path)
+            image_path = './img/' + breed.lower().replace('_', '-') + '.png'
+            image_url = upload_to_ipfs(image_path)
             collectible_metadata["image_uri"] = image_url
 
 
-def upload_image(filepath):
-    with Path(filepath).open('rb') as fp:
+def upload_to_ipfs(filepath):
+    with Path(filepath).open("rb") as fp:
         image_binary = fp.read()
-
-        # uploading to ipfs...
-        ipfs_url = "http://127.0.0.1:5001/webui"
+        ipfs_url = "http://127.0.0.1:5001"
         endpoint = "/api/v0/add"
         response = requests.post(
             ipfs_url + endpoint, files={"file": image_binary})
         ipfs_hash = response.json()["Hash"]
-        filename = filepath.split('/')[-1:][0]
+        filename = filepath.split("/")[-1:][0]
         image_uri = f"https://ipfs.io/ipfs/{ipfs_hash}?filename={filename}"
         print(image_uri)
         return image_uri
